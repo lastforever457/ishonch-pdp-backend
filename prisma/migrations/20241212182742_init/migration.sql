@@ -7,17 +7,20 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT', 'CLEANER');
 -- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE');
 
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('ACTIVE', 'BLOCKED', 'ARCHIVED');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
-    "phone" TEXT NOT NULL DEFAULT '',
+    "phone" TEXT NOT NULL,
     "balance" INTEGER NOT NULL DEFAULT 0,
     "birthday" TIMESTAMP(3) NOT NULL,
     "gender" "Gender" NOT NULL,
     "role" "Role" NOT NULL,
+    "status" "Status" NOT NULL DEFAULT 'ACTIVE',
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -49,12 +52,15 @@ CREATE TABLE "Image" (
 CREATE TABLE "Room" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "capacity" INTEGER NOT NULL,
+    "tables" INTEGER NOT NULL,
+    "chairs" INTEGER NOT NULL,
 
     CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX "Room_name_key" ON "Room"("name");
 
 -- AddForeignKey
 ALTER TABLE "Course" ADD CONSTRAINT "Course_teacherId_fkey" FOREIGN KEY ("teacherId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
