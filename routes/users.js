@@ -9,17 +9,17 @@ router.post("/users/findMany", async (req, res) => {
     const users = await prisma.user.findMany(req.body || {});
     res.json(users);
   } catch (error) {
-    res.status(500).json({ message: JSON.parse(error.message) });
+    res.status(500).json(error.message);
   }
 });
 
 // get one user
-router.get("/users/findUnique", async (req, res) => {
+router.post("/users/findUnique", async (req, res) => {
   try {
     const user = await prisma.user.findUnique(req.body || {});
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: JSON.parse(error.message) });
+    res.status(500).json(error.message);
   }
 });
 
@@ -44,7 +44,7 @@ router.post("/users/create", async (req, res) => {
     });
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(error.message);
   }
 });
 
@@ -53,7 +53,7 @@ router.patch("/users/update", async (req, res) => {
     const user = await prisma.user.update(req.body || {});
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: JSON.parse(error.message) });
+    res.status(500).json(error.message);
   }
 });
 
@@ -62,7 +62,7 @@ router.delete("/users/delete", async (req, res) => {
     const user = await prisma.user.delete(req.body || {});
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: JSON.parse(error.message) });
+    res.status(500).json(error.message);
   }
 });
 
