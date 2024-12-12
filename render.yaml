@@ -1,0 +1,15 @@
+# Render.com deployment configuration
+# https://render.com/docs/yaml-spec
+
+services:
+  - type: web
+    name: ishonch-pdp-backend
+    env: node
+    buildCommand: npm run build
+    startCommand: npm run start
+    port: 3000
+    envVars:
+      - key: DATABASE_URL
+        fromEnvironment: RENDER_POSTGRESQL_DATABASE_URL
+    regions:
+      - frankfurt
