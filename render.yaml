@@ -9,4 +9,4 @@ services:
     startCommand: npm run start
     envVars:
       - key: DATABASE_URL
-        fromEnvironment: RENDER_POSTGRESQL_DATABASE_URL
+        value: ${{ RENDER_POSTGRESQL_DATABASE_URL }}
