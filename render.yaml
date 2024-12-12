@@ -7,9 +7,6 @@ services:
     env: node
     buildCommand: npm run build
     startCommand: npm run start
-    port: 3000
     envVars:
       - key: DATABASE_URL
         fromEnvironment: RENDER_POSTGRESQL_DATABASE_URL
-    regions:
-      - frankfurt
