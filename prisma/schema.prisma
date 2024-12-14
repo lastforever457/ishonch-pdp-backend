@@ -15,16 +15,19 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  firstName String
-  lastName  String
-  phone     String
-  balance   Int      @default(0)
-  birthday  DateTime
-  gender    Gender
-  role      Role
-  groups    Course[]
-  status    Status   @default(ACTIVE)
+  id          String       @id @default(uuid())
+  firstName   String
+  lastName    String
+  phone       String
+  birthday    DateTime
+  email       String?      @unique
+  balance     Int          @default(0)
+  gender      Gender
+  roleId      String
+  role        Role?        @relation(fields: [roleId], references: [id])
+  groups      Course[]
+  status      Status       @default(ACTIVE)
+  password    String
 }
 
 model Course {
@@ -48,11 +51,24 @@ model Image {
 
 model Room {
   id       String   @id @default(uuid())
-  name     String @unique
+  name     String   @unique
   capacity Int
   tables   Int
   chairs   Int
   group    Course[]
+}
+
+model Permission {
+  id    String @id @default(uuid())
+  name  String
+  roles Role[] @relation("RolePermissions")
+}
+
+model Role {
+  id          String       @id @default(uuid())
+  name        String
+  permissions Permission[] @relation("RolePermissions")
+  users       User[]
 }
 
 enum Days {
@@ -66,13 +82,6 @@ enum Days {
   EVEN_DAYS
 }
 
-enum Role {
-  ADMIN
-  TEACHER
-  STUDENT
-  CLEANER
-}
-
 enum Gender {
   MALE
   FEMALE
@@ -82,4 +91,5 @@ enum Status {
   ACTIVE
   BLOCKED
   ARCHIVED
+  WAITING
 }
