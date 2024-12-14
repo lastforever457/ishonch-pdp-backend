@@ -24,7 +24,7 @@ model User {
   balance     Int          @default(0)
   gender      Gender
   roleId      String
-  role        Role?        @relation(fields: [roleId], references: [id])
+  role        Role         @default(STUDENT)
   groups      Course[]
   status      Status       @default(ACTIVE)
   password    String
@@ -58,17 +58,11 @@ model Room {
   group    Course[]
 }
 
-model Permission {
-  id    String @id @default(uuid())
-  name  String
-  roles Role[] @relation("RolePermissions")
-}
-
-model Role {
-  id          String       @id @default(uuid())
-  name        String
-  permissions Permission[] @relation("RolePermissions")
-  users       User[]
+enum Role {
+  ADMIN
+  TEACHER
+  STUDENT
+  CLEANER
 }
 
 enum Days {
@@ -91,5 +85,4 @@ enum Status {
   ACTIVE
   BLOCKED
   ARCHIVED
-  WAITING
 }

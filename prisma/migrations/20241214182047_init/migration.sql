@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "Days" AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'ODD_DAYS', 'EVEN_DAYS');
+CREATE TYPE "Role" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT', 'CLEANER');
 
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT', 'CLEANER');
+CREATE TYPE "Days" AS ENUM ('MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'ODD_DAYS', 'EVEN_DAYS');
 
 -- CreateEnum
 CREATE TYPE "Gender" AS ENUM ('MALE', 'FEMALE');
@@ -16,11 +16,14 @@ CREATE TABLE "User" (
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "balance" INTEGER NOT NULL DEFAULT 0,
     "birthday" TIMESTAMP(3) NOT NULL,
+    "email" TEXT,
+    "balance" INTEGER NOT NULL DEFAULT 0,
     "gender" "Gender" NOT NULL,
-    "role" "Role" NOT NULL,
+    "roleId" TEXT NOT NULL,
+    "role" "Role" NOT NULL DEFAULT 'STUDENT',
     "status" "Status" NOT NULL DEFAULT 'ACTIVE',
+    "password" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -58,6 +61,9 @@ CREATE TABLE "Room" (
 
     CONSTRAINT "Room_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Room_name_key" ON "Room"("name");
