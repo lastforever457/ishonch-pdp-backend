@@ -15,18 +15,18 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(uuid())
-  firstName   String
-  lastName    String
-  phone       String
-  birthday    DateTime
-  email       String?      @unique
-  balance     Int          @default(0)
-  gender      Gender
-  role        Role         @default(STUDENT)
-  groups      Course[]
-  status      Status       @default(ACTIVE)
-  password    String
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  phone     String
+  birthday  DateTime
+  email     String?  @unique
+  balance   Int      @default(0)
+  gender    Gender
+  role      Role     @default(STUDENT)
+  groups    Course[]
+  status    Status   @default(ACTIVE)
+  password  String?  @default("")
 }
 
 model Course {
