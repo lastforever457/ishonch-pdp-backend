@@ -23,7 +23,6 @@ model User {
   email       String?      @unique
   balance     Int          @default(0)
   gender      Gender
-  roleId      String
   role        Role         @default(STUDENT)
   groups      Course[]
   status      Status       @default(ACTIVE)
