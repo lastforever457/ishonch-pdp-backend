@@ -57,7 +57,7 @@ router.patch("/users/update", async (req, res) => {
   }
 });
 
-router.delete("/users/delete", async (req, res) => {
+router.post("/users/delete", async (req, res) => {
   try {
     const user = await prisma.user.delete(req.body || {});
     res.json(user);

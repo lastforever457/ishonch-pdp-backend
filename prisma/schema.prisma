@@ -24,21 +24,22 @@ model User {
   balance   Int      @default(0)
   gender    Gender
   role      Role     @default(STUDENT)
-  groups    Course[]
   status    Status   @default(ACTIVE)
   password  String?  @default("")
+  groupId   String?
+  group     Course?  @relation(fields: [groupId], references: [id])
 }
 
 model Course {
   id              String   @id @default(uuid())
   name            String
   teacherId       String
-  teacher         User     @relation(fields: [teacherId], references: [id])
   lessonRoomId    String
   lessonRoom      Room     @relation(fields: [lessonRoomId], references: [id])
   lessonStartTime DateTime
   lessonStartDate DateTime
   lessonEndDate   DateTime
+  User            User[]
 }
 
 model Image {
