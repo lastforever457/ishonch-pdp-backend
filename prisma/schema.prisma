@@ -26,19 +26,23 @@ model User {
   role      Role     @default(STUDENT)
   status    Status   @default(ACTIVE)
   password  String?  @default("")
-  groupId   String?
-  group     Course?  @relation(fields: [groupId], references: [id])
+  groupId   String? // Aloqa uchun kerak
+  group     Course?  @relation(fields: [groupId], references: [id]) // Aloqa qo'shildi
+  courses   Course[] @relation("StudentCourses") // Student sifatida kurslar
+  lessons   Course[] @relation("TeacherLessons") // Teacher sifatida darslar
 }
 
 model Course {
   id              String   @id @default(uuid())
   name            String
   teacherId       String
+  teacher         User     @relation(fields: [teacherId], references: [id], name: "TeacherLessons") // O'qituvchi
   lessonRoomId    String
   lessonRoom      Room     @relation(fields: [lessonRoomId], references: [id])
   lessonStartTime DateTime
   lessonStartDate DateTime
   lessonEndDate   DateTime
+  students        User[]   @relation("StudentCourses") // Talabalar
   User            User[]
 }
 
